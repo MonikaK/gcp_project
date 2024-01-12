@@ -3,14 +3,8 @@ kind: Ingress
 metadata:
   name: cinema-app-ingress
 spec:
-  rules:
-    - host: cinemaapp-gcp.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: cinema-app-backend
-                port:
-                  number: 80
+  defaultBackend:
+    service:
+      name: cinema-app-backend
+      port:
+        number: 80
