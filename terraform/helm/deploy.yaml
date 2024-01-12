@@ -15,7 +15,7 @@ spec:
         run: cinema-app
     spec:
       containers:
-        - image: k8s.gcr.io/serve_hostname:v1.4
+        - image: monikak00/mycinemaapp:1.0.0
           name: hostname
           ports:
             - containerPort: 8080
