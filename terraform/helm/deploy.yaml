@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: cinema-app
+  name: cinema-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: cinema-app
+  template:
+    metadata:
+      labels:
+        run: cinema-app
+    spec:
+      containers:
+        - image: k8s.gcr.io/serve_hostname:v1.4
+          name: hostname
+          ports:
+            - containerPort: 8080
+              protocol: TCP
