@@ -1,11 +1,13 @@
 package com.gcp.gcp_project.controller;
 
-import com.gcp.gcp_project.model.User;
-import com.gcp.gcp_project.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import com.gcp.gcp_project.PubSubConfig;
+import com.gcp.gcp_project.model.User;
+import com.gcp.gcp_project.repository.UsersRepository;
 
 /**
  * A class responsible for handling HTTP requests connected with TicketType objects. Everyone has access to its methods.
@@ -13,10 +15,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://34.159.233.43:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 public class UsersController {
     private final UsersRepository usersRepository;
     private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private PubSubConfig.PubsubOutboundGateway messagingGateway;
 
     /**
      * Method returning all User objects stored in UsersRepository.
@@ -49,6 +55,7 @@ public class UsersController {
     public ResponseEntity<?> addUser(@RequestBody User user){
         var password = passwordEncoder.encode(user.getPassword());
 
+        messagingGateway.sendToPubsub( user.getEmail() + "|" + user.getLogin() + "|" + user.getName() + "|" + user.getSurname() + "|" + user.getPhone());
         return ResponseEntity.ok(usersRepository.save(new User(user.getName(), user.getSurname(), user.getEmail(),
                 user.getPhone(), user.getLogin(), password, false, "ROLE_USER")));
     }

@@ -7,28 +7,10 @@ provider "helm" {
 }
 
 resource "helm_release" "example" {
-  name       = "my-redis-release"
-  chart = "https://charts.bitnami.com/bitnami/redis-10.7.16.tgz"
-  version    = "6.0.1"
+  name  = "my-cinema-app-chart"
+  chart = "${path.module}/my-cinema-app-chart"
 
-  set {
-    name  = "cluster.enabled"
-    value = "true"
-  }
-
-  set {
-    name  = "metrics.enabled"
-    value = "true"
-  }
-
-  set {
-    name  = "service.annotations.prometheus\\.io/port"
-    value = "9127"
-    type  = "string"
-  }
-
-#   name  = "my-local-chart"
-#   chart = "./helm"
+  wait = false
 
   depends_on = [
     google_container_cluster.primary

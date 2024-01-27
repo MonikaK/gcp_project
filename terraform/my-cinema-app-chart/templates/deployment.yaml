@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: cinema-app
+  name: cinema-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: cinema-app
+  template:
+    metadata:
+      labels:
+        run: cinema-app
+    spec:
+      serviceAccountName: cinema-account
+      containers:
+        - image: monikak846/cinema-app-image:2.0.0
+          name: cinema-app
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+      imagePullSecrets:
+        - name: my-registry-secret
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: cinema-app-frontend
+  name: cinema-app-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: cinema-app-frontend
+  template:
+    metadata:
+      labels:
+        run: cinema-app-frontend
+    spec:
+      containers:
+        - image: monikak846/cinema-app-frontend:1.0.12
+          name: cinema-app-frontend
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+      imagePullSecrets:
+        - name: my-registry-secret

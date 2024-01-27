@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cinema-app-lb
+  # annotations:
+  #   cloud.google.com/neg: '{"ingress": true}'
+spec:
+  type: LoadBalancer
+  selector:
+    run: cinema-app
+  ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cinema-app-frontend-lb
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
+spec:
+  type: LoadBalancer
+  selector:
+    run: cinema-app-frontend
+  ports:
+    - name: http
+      port: 3000
+      protocol: TCP
+      targetPort: 3000

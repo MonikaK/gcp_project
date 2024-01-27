@@ -1,1 +1,1 @@
-export const FETCH_URL = "http://localhost:8080/api/";
+export const FETCH_URL = "http://34.159.142.11:8080/api/";

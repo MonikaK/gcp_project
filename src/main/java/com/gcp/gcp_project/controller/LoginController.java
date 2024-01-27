@@ -18,7 +18,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/login")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://34.159.233.43:3000")
 public class LoginController {
     private final JwtUtils jwtUtils;
 

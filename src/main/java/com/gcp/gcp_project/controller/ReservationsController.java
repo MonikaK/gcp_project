@@ -22,7 +22,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/reservations")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://34.159.233.43:3000")
 public class ReservationsController {
     private final ReservationRepository reservationRepository;
     private final ReservationToReservationResponseMapper reservationToReservationResponseMapper;

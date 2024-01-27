@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/tickets")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://34.159.233.43:3000")
 public class TicketTypesController {
     private final TicketTypeRepository ticketTypeRepository;
 

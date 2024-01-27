@@ -33,9 +33,6 @@ public class UserInfoDetails implements UserDetails {
         this.grantedAuthorityList = Arrays.stream(user.getRoles().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
-
-    System.out.println(grantedAuthorityList.get(0));
-    System.out.println(grantedAuthorityList.get(1));
     }
 
     /**

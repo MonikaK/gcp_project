@@ -20,7 +20,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/repertoire")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://34.159.233.43:3000")
 public class RepertoireController {
     private final RepertoireRepository repertoireRepository;
     private final RepertoireToRepertoireResponseMapper repertoireToRepertoireResponseMapper;

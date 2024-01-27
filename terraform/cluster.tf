@@ -12,8 +12,13 @@ resource "google_container_cluster" "primary" {
   remove_default_node_pool = true
   initial_node_count       = 1
 
+
   networking_mode = "VPC_NATIVE"
   ip_allocation_policy {}
+
+  workload_identity_config {
+    workload_pool = "${var.project}.svc.id.goog"
+  }
 }
 
 # Separately Managed Node Pool
@@ -29,7 +34,11 @@ resource "google_container_node_pool" "primary_nodes" {
     oauth_scopes = [
       "https://www.googleapis.com/auth/logging.write",
       "https://www.googleapis.com/auth/monitoring",
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/sqlservice.admin",
+      "https://www.googleapis.com/auth/devstorage.read_only",
     ]
+    service_account = google_service_account.service-account.email
 
     labels = {
       env = var.project
@@ -41,5 +50,11 @@ resource "google_container_node_pool" "primary_nodes" {
     metadata = {
       disable-legacy-endpoints = "true"
     }
+  }
+
+  depends_on = [ helm_release.example ]
+
+  timeouts {
+    create = "20m"
   }
 }
